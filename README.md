@@ -4,3 +4,5 @@ init → status → add → commit → branch → log
 ## Правило веток: feature/DVT-X
 - master — всегда чистый
 - feature/DVT-3 — работа по задаче №3
+
+## DVT-4 — GitHub и первый Pull Request
