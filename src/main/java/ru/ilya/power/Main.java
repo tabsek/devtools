@@ -1,20 +1,16 @@
 package ru.ilya.power;
 
-public class ProgressDemo {
+public class Main {
     static void main() {
-        Progress progress = new Progress(
-                "Ilya",
-                2,
-                3
-        );
+        ProgressTracker tracker = new ProgressTracker();
 
-        System.out.println(progress.summary());
-        if (progress.readyForSprint()){
-            System.out.println("Status: sprint ready");
-        } else {
-            System.out.println("Status: backlog first");
-        }
+        Student[] students ={
+                new Student("Иван", "Москва", "Backend разработка", 5, 12),
+                new Student("Мария", "Санкт-Петербург", "Fullstack", 8,12),
+                new Student("Пётр", "Казань", "Java Backend", 12, 12)
+        };
 
-        System.out.println("Current branch: feature/DVT-3");
+        String progress = tracker.calculateTotalProgress(students);
+        System.out.println(progress);
     }
 }
