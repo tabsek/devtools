@@ -18,7 +18,7 @@ java {
 }
 
 application {
-    mainClass = 'ru.ilya.power.ProgressDemo'
+    mainClass = 'ru.ilya.power.Main'
 }
 
 repositories {
