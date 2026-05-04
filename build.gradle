@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'jacoco'
+    id 'checkstyle'
 }
 
 group = 'ru.ilya.power'
@@ -32,6 +34,52 @@ dependencies {
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
 }
 
+checkstyle {
+    toolVersion = '10.12.4'
+    maxErrors = 0
+    maxWarnings = 999
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+jacoco {
+    toolVersion = '0.8.14'
+}
+
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80
+            }
+        }
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'ru/ilya/power/Main.class',
+                    'ru/ilya/power/ProgressDemo.class',
+                    'ru/ilya/power/Student.class',
+                    'ru/ilya/power/ProgressTracker.class'
+            ])
+        }))
+    }
+}
+
+check {
+    dependsOn jacocoTestCoverageVerification
 }
