@@ -1,7 +1,7 @@
 package ru.ilya.power;
 
 public class ProgressTracker {
-    public String calculateTotalProgress(Student[] students){
+    public String calculateTotalProgress(Student[] students) {
 
         if (students == null || students.length == 0) {
             throw new IllegalArgumentException("Некорректное значение массива");
@@ -11,7 +11,7 @@ public class ProgressTracker {
         int totalTotal = 0;
         int index = 0;
 
-        while (index < students.length){
+        while (index < students.length) {
             totalTotal += students[index].totalLessons();
             totalCompleted += students[index].comletedLessons();
             index += 1;
