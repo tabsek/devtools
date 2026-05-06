@@ -1,3 +1,7 @@
+## DVT-8 — GitHub Actions CI-пайплайн для автоматической проверки кода
+
+[![Java CI](https://github.com/tabsek/devtools/actions/workflows/ci.yml/badge.svg)](https://github.com/tabsek/devtools/actions/workflows/ci.yml)
+
 ## Git локальный цикл
 init → status → add → commit → branch → log
 
