@@ -6,7 +6,7 @@ init → status → add → commit → branch → log
 - feature/DVT-3 — работа по задаче №3
 
 ## DVT-4 — GitHub и первый Pull Request
-## DVT-8 — Кодстайл-гайд проекта devtools
+## DVT-7 — Кодстайл-гайд проекта devtools
 
 Проект следует правилам Google Java Style Guide с адаптацией.
 Автоматическая проверка: `./gradlew checkstyleMain`

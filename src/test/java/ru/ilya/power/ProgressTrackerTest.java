@@ -11,7 +11,7 @@ class ProgressTrackerTest {
 
     @Test
     @DisplayName("Должен корректно вычислить суммарный прогресс, когда передан массив студентов")
-    void shouldCalculateTotalProgress_whenMultipleStudents() {
+    void shouldCalculateTotalProgressWhenMultipleStudents() {
         ProgressTracker tracker = new ProgressTracker();
 
         Student[] students = {
@@ -28,7 +28,7 @@ class ProgressTrackerTest {
 
     @Test
     @DisplayName("Должен корректно вычислить суммарный прогресс, когда все студенты завершили курс")
-    void shouldCalculateTotalProgress_whenStudentsCompletedCourse() {
+    void shouldCalculateTotalProgressWhenStudentsCompletedCourse() {
         ProgressTracker tracker = new ProgressTracker();
 
         Student[] students = {
