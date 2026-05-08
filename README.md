@@ -1,3 +1,26 @@
+## Технологический стек проекта
+
+### Языки и платформы
+- **Java 25 LTS** — основной язык разработки
+- **Gradle 8.x** — система сборки (через Gradle Wrapper)
+
+### Инструменты качества кода
+- **Checkstyle** — статический анализ стиля кода
+    - Конфигурация: `config/checkstyle/checkstyle.xml`
+    - Запуск: `./gradlew checkstyleMain`
+- **JUnit 5** — фреймворк тестирования
+    - Запуск: `./gradlew test`
+
+### CI/CD
+- **GitHub Actions** — автоматическая проверка PR
+    - Конфигурация: `.github/workflows/`
+
+### Правила кода
+- Стиль: Google Java Style Guide (через Checkstyle)
+- Коммиты: осмысленные сообщения на русском
+- Ветки: `feature/DVT-X` от актуального `master`
+- Pull Request: обязателен для слияния в `master`
+
 ## DVT-8 — GitHub Actions CI-пайплайн для автоматической проверки кода
 
 [![Java CI](https://github.com/tabsek/devtools/actions/workflows/ci.yml/badge.svg)](https://github.com/tabsek/devtools/actions/workflows/ci.yml)
@@ -352,3 +375,194 @@ init → status → add → commit → branch → log
 Что выбрал и почему
 
 Клауд, т.к. лучше понял, что мне нужно 
+
+## DVT-12 — глоссарий терминов
+
+## Личный глоссарий терминов Dev Tools
+
+### Категория: Java-экосистема
+
+#### JDK — Java Development Kit
+
+**Определение:** Development environment for building applications using the Java programming language. Includes compiler (javac), archiver (jar), documentation generator (javadoc), and other tools.
+
+**Контекст использования:** JDK необходим для компиляции Java-кода в байт-код и создания исполняемых JAR-файлов. Без JDK невозможно собрать Java-проект.
+
+**Пример:** После установки JDK выполняем `java -version` для проверки версии. В IntelliJ IDEA настраиваем Project SDK: File → Project Structure → Project → SDK → выбираем JDK 25.
+
+**Источник:** https://docs.oracle.com/en/java/javase/21/docs/
+
+---
+
+#### JRE — Java Runtime Environment
+
+**Определение:** JRE provides the libraries, Java Virtual Machine, and other components to run applications written in Java. It does not contain development tools like compiler or debugger.
+
+**Контекст использования:** JRE используется на машинах пользователя или в production-окружении, где нужно только запускать Java-приложения, но не компилировать их.
+
+**Пример:** Если наш проект собран в JAR-файл, для его запуска на сервере нужна только JRE (или JDK, который включает JRE). Команда `java -jar app.jar` использует среду выполнения из JRE.
+
+**Источник:** https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/package-summary.html
+
+---
+
+#### JVM — Java Virtual Machine
+
+**Определение:** The Java Virtual Machine is the cornerstone of the Java platform. It is the component responsible for executing the compiled bytecode, providing runtime environment and memory management.
+
+**Контекст использования:** JVM запускает байт-код, делает Java кроссплатформенной (Write Once, Run Anywhere). Управляет памятью (GC, Heap) и потоками.
+
+**Пример:** Наша программа HelloWorld.class (байт-код) не запускается напрямую ОС. Команда `java HelloWorld` запускает JVM, которая интерпретирует байт-код в машинный код под текущую ОС (Windows, Linux, macOS).
+
+**Источник:** https://docs.oracle.com/javase/specs/jvms/se21/html/
+
+---
+
+#### Gradle Wrapper — Gradle Wrapper
+
+**Определение:** The Wrapper is a script that invokes a declared version of Gradle, downloading it if necessary. It allows to run a Gradle build without needing a prior Gradle installation.
+
+**Контекст использования:** Гарантирует, что все члены команды и CI-сервер используют строго одну версию Gradle для сборки проекта. Файлы (`gradlew`, `gradle-wrapper.properties`) хранятся в репозитории.
+
+**Пример:** Вместо установки Gradle глобально, мы запускаем `./gradlew build` из корня проекта. Wrapper сам скачает Gradle 8.5 (как указано в `gradle-wrapper.properties`) и выполнит сборку.
+
+**Источник:** https://docs.gradle.org/current/userguide/gradle_wrapper.html
+
+---
+
+#### Build Tool — Build Tool
+
+**Определение:** A software tool that automates the process of compiling source code, managing dependencies, running tests, and packaging applications into executable artifacts.
+
+**Контекст использования:** Используется ежедневно разработчиком и CI/CD для сборки проекта. Автоматизирует рутинные шаги (компиляция → тесты → упаковка).
+
+**Пример:** В нашем проекте `devtools` Build Tool — Gradle. Мы запускаем `./gradlew clean test` для очистки, компиляции и выполнения тестов одной командой.
+
+**Источник:** https://docs.gradle.org/current/userguide/what_is_gradle.html
+
+---
+
+#### Dependency — Dependency
+
+**Определение:** An external library or module that a project requires to compile, run, or test. In Gradle, dependencies are declared in `build.gradle` using configurations like `implementation`, `testImplementation`.
+
+**Контекст использования:** Gradle скачивает зависимости из репозиториев (Maven Central, JCenter). Управление версиями критично — разные версии библиотек могут конфликтовать.
+
+**Пример:** В `build.gradle` добавляем `implementation 'org.projectlombok:lombok:1.18.30'`. Lombok становится зависимостью — его классы доступны в коде, а Gradle автоматически подхватит JAR-файл этой библиотеки.
+
+**Источник:** https://docs.gradle.org/current/userguide/dependency_management.html
+
+---
+
+### Категория: Инструменты разработки
+
+#### IDE — Integrated Development Environment
+
+**Определение:** A software application that provides comprehensive facilities to programmers for software development. Typically includes code editor, build tools, and debugger in one interface.
+
+**Контекст использования:** IDE объединяет редактор кода, компилятор, отладчик и терминал в одном окне, повышая скорость разработки и удобство рефакторинга.
+
+**Пример:** В нашем проекте используется IntelliJ IDEA. Она подсвечивает синтаксис, показывает ошибки компиляции на лету, позволяет ставить Breakpoint и запускать Debug как часть интерфейса.
+
+**Источник:** https://www.jetbrains.com/help/idea/meet-intellij-idea.html
+
+---
+
+#### Commit — Commit
+
+**Определение:** A commit is a snapshot of the tracked files in a Git repository at a specific point in time. It contains a unique SHA-1 hash, author, date, and message describing the changes.
+
+**Контекст использования:** Фиксация изменений перед созданием Pull Request или переключением на другую ветку. Каждый коммит — атомарная единица изменений, которую можно откатить, сравнить или слить.
+
+**Пример:** После добавления глоссария в README выполняем в терминале: `git add README.md` → `git commit -m "docs: add dev tools glossary"`. В Git Log появится этот коммит с хешем `abc123`.
+
+**Источник:** https://git-scm.com/docs/git-commit
+
+---
+
+#### Branch — Branch
+
+**Определение:** A branch is a movable pointer to a commit, allowing development work to diverge from the main line. Branches enable parallel development and isolation of experimental features.
+
+**Контекст использования:** Ветки изолируют новую разработку от стабильного кода в master. Каждая задача (фича или багфикс) получает свою ветку, что упрощает Code Review и тестирование.
+
+**Пример:** Мы создали ветку `feature/DVT-12` от `master`. Все коммиты по задаче DVT-12 идут в эту ветку, не затрагивая стабильный `master`. После слияния ветка удаляется.
+
+**Источник:** https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
+
+---
+
+#### Pull Request — Pull Request
+
+**Определение:** A method of submitting contributions to a project. A developer requests that changes from one branch (feature) be merged into another (main), enabling code review and automated checks before merge.
+
+**Контекст использования:** Ключевая практика командной разработки. PR запускает CI (проверки, тесты), позволяет коллегам оставлять комментарии к коду, обсудить изменения и только затем влить в основную ветку.
+
+**Пример:** В GitHub после пуша ветки `feature/DVT-12` мы создаём PR `feature/DVT-12 → master`. CI запускает Checkstyle и тесты. Тимлид смотрит изменения, комментирует. После аппрува жмём "Merge".
+
+**Источник:** https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
+
+---
+
+#### Checkstyle — Checkstyle
+
+**Определение:** A static code analysis tool used to check if Java source code complies with a set of coding style rules and standards (e.g., naming conventions, indentation, import order).
+
+**Контекст использования:** Автоматически проверяет стиль кода при сборке, предотвращая попадание плохо отформатированного кода в репозиторий.
+
+**Пример:** В `build.gradle` подключён плагин Checkstyle. При запуске `./gradlew checkstyleMain` инструмент проверяет, все ли поля private, есть ли Javadoc, правильные ли отступы. Если нарушений нет — BUILD SUCCESSFUL.
+
+**Источник:** https://checkstyle.org/
+
+---
+
+#### Debug — Debug
+
+**Определение:** The process of identifying and removing errors (bugs) from a program. Debugging involves running the program step-by-step, inspecting variables, and controlling execution flow.
+
+**Контекст использования:** Используется, когда код компилируется, но работает не так, как ожидается (логическая ошибка). Debug позволяет "заморозить" программу в нужной точке и посмотреть значения всех переменных.
+
+**Пример:** Программа падает с NullPointerException. Ставим Breakpoint на строке с вызовом метода. Запускаем Debug. Когда выполнение остановится, смотрим в Evaluate: `person.getName()` → `null`. Понимаем, что person не инициализирован.
+
+**Источник:** https://www.jetbrains.com/help/idea/debugging-code.html
+
+---
+
+#### Breakpoint — Breakpoint
+
+**Определение:** A marker set in the source code that tells the debugger to suspend program execution at that specific line. Allows inspection of program state (variables, call stack) at that moment.
+
+**Контекст использования:** При отладке ставится на строке кода, где предполагается проблема. Программа дойдёт до этой строки и остановится, не выполняя её. Затем можно смотреть переменные и продолжать выполнение по шагам.
+
+**Пример:** Кликаем слева от номера строки в IDEA: красный кружок. Запускаем Debug. Программа останавливается на `System.out.println(data);`. До выполнения этой строки мы проверяем в окне Debug, что `data != null`.
+
+**Источник:** https://www.jetbrains.com/help/idea/using-breakpoints.html
+
+---
+
+### Категория: Процессы и практики
+
+#### Code Review — Code Review
+
+**Определение:** A systematic examination of source code by developers other than the author, intended to find defects, improve code quality, and ensure adherence to team standards before merging.
+
+**Контекст использования:** Обязательный этап перед слиянием Pull Request в основную ветку. Улучшает качество кода, распространяет знания о проекте в команде, снижает количество багов.
+
+**Пример:** Мы создали PR. Тимлид оставляет комментарий: "Метод слишком длинный, разбей на три". Исправляем, пушим, получаем апрув. CI зелёный — сливаем. Без Code Review этот код сразу попал бы в master.
+
+**Источник:** https://www.agilealliance.org/glossary/code-review/
+
+---
+
+#### CI/CD — Continuous Integration / Continuous Delivery
+
+**Определение:** CI automatically builds and tests every commit. CD automatically deploys the tested code to staging/production environments. Together, they provide fast feedback and reliable releases.
+
+**Контекст использования:** Автоматизация сборки и тестирования (CI) при каждом push в репозиторий, а также автоматическое развёртывание (CD) при успешных проверках.
+
+**Пример:** В репозитории лежит `.github/workflows/gradle.yml`. При создании PR GitHub Actions запускает `./gradlew build`. Если статус красный (компиляция не прошла), PR нельзя влить без исправлений. Это CI.
+
+**Источник:** https://www.thoughtworks.com/radar
+
+
+Вопросы отсутсвуют. Все прояснил самостоятельно.
