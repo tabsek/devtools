@@ -311,7 +311,7 @@ init → status → add → commit → branch → log
 //    .filter(s -> city.equals(s.city())) // безопасно, если s.city() == null
 //    .toList();
 //
-//// Вариант 2: нужна ли поддержка null как валидного города?
+// Вариант 2: нужна ли поддержка null как валидного города?
 //Objects.requireNonNull(city, "city must not be null");
 //return studentList.stream()
 //    .filter(s -> city.equals(s.city()))
@@ -327,12 +327,12 @@ init → status → add → commit → branch → log
 ### Оптимизация производительности (если методы вызываются часто):
 ```java
 // Предварительно построить Map: город -> список студентов
-private Map<String, List<Student>> studentsByCity;
-
-public List<Student> getStudentsFromCity(String city) {
-    if (city == null) return List.of();
-    return studentsByCity.getOrDefault(city, List.of());
-}
+//private Map<String, List<Student>> studentsByCity;
+//
+//public List<Student> getStudentsFromCity(String city) {
+//    if (city == null) return List.of();
+//    return studentsByCity.getOrDefault(city, List.of());
+//}
 ```
 
 ### Дополнительные улучшения (по требованиям):
