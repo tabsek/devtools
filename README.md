@@ -244,7 +244,7 @@ init → status → add → commit → branch → log
 `s` — слишком короткое и неинформативное имя. По конвенциям Java (и общим best practices для читаемости) лямбда-параметр должен отражать тип: `student`.
 
 ```java
-.filter(student -> Objects.equals(student.city(), city))
+//.filter(student -> Objects.equals(student.city(), city))
 ```
 
 В остальном код соответствует конвенциям: именование метода в camelCase, возвращаемый тип явный, структура чистая.
@@ -306,22 +306,22 @@ init → status → add → commit → branch → log
 ### Исправление null-проблем:
 ```java
 // Вариант 1: защита от null в параметре и в city студента
-if (city == null) return List.of();
-return studentList.stream()
-    .filter(s -> city.equals(s.city())) // безопасно, если s.city() == null
-    .toList();
-
-// Вариант 2: нужна ли поддержка null как валидного города?
-Objects.requireNonNull(city, "city must not be null");
-return studentList.stream()
-    .filter(s -> city.equals(s.city()))
-    .toList();
+//if (city == null) return List.of();
+//return studentList.stream()
+//    .filter(s -> city.equals(s.city())) // безопасно, если s.city() == null
+//    .toList();
+//
+//// Вариант 2: нужна ли поддержка null как валидного города?
+//Objects.requireNonNull(city, "city must not be null");
+//return studentList.stream()
+//    .filter(s -> city.equals(s.city()))
+//    .toList();
 ```
 
 ### Улучшение читаемости:
 ```java
 // Добавить пробелы в лямбде
-.filter(s -> city.equals(s.city()))
+//.filter(s -> city.equals(s.city()))
 ```
 
 ### Оптимизация производительности (если методы вызываются часто):
